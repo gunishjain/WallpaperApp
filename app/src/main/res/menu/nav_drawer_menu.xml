@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/favourite"
+        android:title="Favourites">
+    </item>
+
+    <item
+        android:id="@+id/categories"
+        android:title="Categories">
+    </item>
+
+    <item
+        android:id="@+id/rating"
+        android:title="Rate Us!">
+    </item>
+
+    <item
+        android:id="@+id/share"
+        android:title="Share App">
+    </item>
+</menu>
