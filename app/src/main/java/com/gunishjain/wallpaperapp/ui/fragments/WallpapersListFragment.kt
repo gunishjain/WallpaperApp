@@ -23,7 +23,7 @@ class WallpapersListFragment : Fragment() {
     private lateinit var binding: FragmentWallpapersListBinding
     private val wallpaperListVM: WallPaperListViewModel by viewModels()
     private lateinit var wallpaperListAdapter: WallpaperListAdapter
-
+    private var currentCategory: String = "nature"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +42,15 @@ class WallpapersListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         createWallPaperListRV()
-
-        wallpaperListVM.getWallPaperList("horror")
         observeWallPaperList()
 
+        val category = arguments?.getString("category")
+        if (!category.isNullOrEmpty()) {
+            currentCategory = category
+        }
+
+        // Fetch wallpapers based on the current category
+        wallpaperListVM.getWallPaperList(currentCategory)
     }
 
     private fun createWallPaperListRV() {
@@ -56,13 +61,16 @@ class WallpapersListFragment : Fragment() {
     }
 
     private fun observeWallPaperList() {
-
         wallpaperListVM.observeWallpaperListLiveData().observe(viewLifecycleOwner
         ) { photosList->
             wallpaperListAdapter.setWallpaperList(photosList as ArrayList<Photo>)
         }
     }
 
+    fun updateCategory(category: String) {
+        currentCategory = category
+        wallpaperListVM.getWallPaperList(currentCategory)
+    }
 
 }
 
