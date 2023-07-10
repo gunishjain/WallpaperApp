@@ -3,13 +3,16 @@ package com.gunishjain.wallpaperapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.gunishjain.wallpaperapp.databinding.ActivityMainBinding
+import com.gunishjain.wallpaperapp.ui.fragments.WallpapersListFragment
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var fragmentContainer: FrameLayout
     lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,6 +20,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        val fragment = WallpapersListFragment()
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(binding.fragmentContainer.id, fragment)
+        fragmentTransaction.commit()
 
 
         toggle = ActionBarDrawerToggle(this,binding.drawerLayout,R.string.open,R.string.close)
@@ -41,6 +50,8 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
+
 
     }
 
