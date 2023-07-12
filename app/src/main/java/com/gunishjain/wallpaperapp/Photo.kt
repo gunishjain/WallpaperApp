@@ -1,5 +1,9 @@
 package com.gunishjain.wallpaperapp
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Photo(
     val alt: String,
     val avg_color: String,
@@ -12,4 +16,4 @@ data class Photo(
     val src: Src,
     val url: String,
     val width: Int
-)
+) : Parcelable

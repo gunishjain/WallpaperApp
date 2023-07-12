@@ -1,4 +1,4 @@
-package com.gunishjain.wallpaperapp
+package com.gunishjain.wallpaperapp.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,10 +6,9 @@ import android.view.MenuItem
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.gunishjain.wallpaperapp.R
 import com.gunishjain.wallpaperapp.adapters.CategoryListAdapter
-import com.gunishjain.wallpaperapp.adapters.WallpaperListAdapter
 import com.gunishjain.wallpaperapp.databinding.ActivityMainBinding
 import com.gunishjain.wallpaperapp.ui.fragments.WallpapersListFragment
 
@@ -38,23 +37,23 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.replace(binding.fragmentContainer.id, fragment)
         fragmentTransaction.commit()
 
-        toggle = ActionBarDrawerToggle(this,binding.drawerLayout,R.string.open,R.string.close)
+        toggle = ActionBarDrawerToggle(this,binding.drawerLayout, R.string.open, R.string.close)
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.favourite-> Toast.makeText(applicationContext,
+                R.id.favourite -> Toast.makeText(applicationContext,
                     "Clicked on Fav",Toast.LENGTH_SHORT).show()
 
-                R.id.categories->Toast.makeText(applicationContext,
+                R.id.categories ->Toast.makeText(applicationContext,
                     "Clicked on Category",Toast.LENGTH_SHORT).show()
 
-                R.id.share->Toast.makeText(applicationContext,
+                R.id.share ->Toast.makeText(applicationContext,
                     "Clicked on Shared",Toast.LENGTH_SHORT).show()
 
-                R.id.rating->Toast.makeText(applicationContext,
+                R.id.rating ->Toast.makeText(applicationContext,
                     "Clicked on Ratings!",Toast.LENGTH_SHORT).show()
             }
             true

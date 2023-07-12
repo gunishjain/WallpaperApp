@@ -5,18 +5,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.gunishjain.wallpaperapp.Photo
-import com.gunishjain.wallpaperapp.Src
 import com.gunishjain.wallpaperapp.databinding.WpSmallBinding
 
 class WallpaperListAdapter(): RecyclerView.Adapter<WallpaperListAdapter.WallpaperListViewHolder>() {
 
     private var wallpaperList = ArrayList<Photo>()
+    private var onItemClick: ((Photo) -> Unit)? = null
     private var itemWidth: Int = 0
     private var itemHeight: Int = 0
 
     fun setWallpaperList(wallpaperList: ArrayList<Photo>){
         this.wallpaperList=wallpaperList
         notifyDataSetChanged()
+    }
+
+    fun setOnItemClickListener(listener: (Photo) -> Unit) {
+        onItemClick = listener
     }
 
 
@@ -42,7 +46,6 @@ class WallpaperListAdapter(): RecyclerView.Adapter<WallpaperListAdapter.Wallpape
 
     override fun onBindViewHolder(holder: WallpaperListViewHolder, position: Int) {
 
-
         val layoutParams = holder.binding.imgWallpaper.layoutParams
         layoutParams.width = itemWidth
         layoutParams.height = itemHeight
@@ -51,6 +54,11 @@ class WallpaperListAdapter(): RecyclerView.Adapter<WallpaperListAdapter.Wallpape
         Glide.with(holder.itemView)
             .load(wallpaperList[position].src.portrait)
             .into(holder.binding.imgWallpaper)
+
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(wallpaperList[position])
+        }
+
     }
 
     class WallpaperListViewHolder(var binding: WpSmallBinding):RecyclerView.ViewHolder(binding.root)

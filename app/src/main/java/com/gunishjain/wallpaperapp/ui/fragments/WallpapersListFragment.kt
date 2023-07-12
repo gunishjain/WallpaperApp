@@ -1,5 +1,6 @@
 package com.gunishjain.wallpaperapp.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.gunishjain.wallpaperapp.adapters.WallpaperListAdapter
 
 
 import com.gunishjain.wallpaperapp.databinding.FragmentWallpapersListBinding
+import com.gunishjain.wallpaperapp.ui.activities.WallpaperViewPagerActivity
 import com.gunishjain.wallpaperapp.viewmodels.WallPaperListViewModel
 
 
@@ -51,6 +53,18 @@ class WallpapersListFragment : Fragment() {
 
         // Fetch wallpapers based on the current category
         wallpaperListVM.getWallPaperList(currentCategory)
+
+        onWallpaperClick()
+
+    }
+
+    private fun onWallpaperClick() {
+        wallpaperListAdapter.setOnItemClickListener { photo->
+            val intent = Intent(requireContext(),WallpaperViewPagerActivity::class.java)
+            intent.putExtra("photo",photo)
+            intent.putExtra("category",currentCategory)
+            startActivity(intent)
+        }
     }
 
     private fun createWallPaperListRV() {
