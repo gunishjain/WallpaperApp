@@ -2,7 +2,7 @@ package com.gunishjain.wallpaperapp.util
 
 class Constants {
     companion object {
-        const val API_KEY="HrStOZNNc96y4yxknB9UeW8Lhyv2EdypTmusQ1th2JaIOdyq7MXFY2LX"
+        const val API_KEY="YOUR_API_KEY"
         const val BASE_URL="https://api.pexels.com/"
         const val WALLPAPAPER_DB_NAME="wallpapers_db"
 
