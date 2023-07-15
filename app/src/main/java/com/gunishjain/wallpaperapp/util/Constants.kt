@@ -4,5 +4,7 @@ class Constants {
     companion object {
         const val API_KEY="HrStOZNNc96y4yxknB9UeW8Lhyv2EdypTmusQ1th2JaIOdyq7MXFY2LX"
         const val BASE_URL="https://api.pexels.com/"
+        const val WALLPAPAPER_DB_NAME="wallpapers_db"
+
     }
 }

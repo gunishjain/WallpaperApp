@@ -8,10 +8,12 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gunishjain.wallpaperapp.R
-import com.gunishjain.wallpaperapp.adapters.CategoryListAdapter
+import com.gunishjain.wallpaperapp.ui.adapters.CategoryListAdapter
 import com.gunishjain.wallpaperapp.databinding.ActivityMainBinding
 import com.gunishjain.wallpaperapp.ui.fragments.WallpapersListFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

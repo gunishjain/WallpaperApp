@@ -11,8 +11,40 @@
         android:id="@+id/img_SingleWallpaper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:src="@color/white">
     </ImageView>
+
+    <ImageView
+        android:id="@+id/img_favourite"
+        android:layout_width="@dimen/_33sdp"
+        android:layout_height="@dimen/_33sdp"
+        android:layout_gravity="bottom|right"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="@dimen/_25sdp"
+        android:layout_marginBottom="@dimen/_25sdp"
+        android:src="@drawable/favorite_24"
+        />
+
+    <ImageView
+        android:id="@+id/img_download"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_gravity="bottom|left"
+        android:scaleType="centerCrop"
+        android:layout_marginLeft="@dimen/_25sdp"
+        android:layout_marginBottom="@dimen/_25sdp"
+        android:src="@drawable/download24"
+         />
+
+    <ImageView
+        android:id="@+id/img_setWallPaper"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_gravity="bottom|center"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:src="@drawable/ic_setwp"
+         />
 
 </androidx.cardview.widget.CardView>

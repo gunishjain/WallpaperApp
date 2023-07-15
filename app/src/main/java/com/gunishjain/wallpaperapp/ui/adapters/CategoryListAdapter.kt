@@ -1,4 +1,4 @@
-package com.gunishjain.wallpaperapp.adapters
+package com.gunishjain.wallpaperapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

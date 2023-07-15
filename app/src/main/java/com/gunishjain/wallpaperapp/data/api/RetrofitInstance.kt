@@ -1,4 +1,4 @@
-package com.gunishjain.wallpaperapp.api
+package com.gunishjain.wallpaperapp.data.api
 
 import com.gunishjain.wallpaperapp.util.Constants.Companion.BASE_URL
 import okhttp3.OkHttpClient

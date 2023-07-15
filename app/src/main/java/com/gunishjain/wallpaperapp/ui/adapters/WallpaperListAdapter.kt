@@ -1,10 +1,10 @@
-package com.gunishjain.wallpaperapp.adapters
+package com.gunishjain.wallpaperapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.gunishjain.wallpaperapp.Photo
+import com.gunishjain.wallpaperapp.data.models.Photo
 import com.gunishjain.wallpaperapp.databinding.WpSmallBinding
 
 class WallpaperListAdapter(): RecyclerView.Adapter<WallpaperListAdapter.WallpaperListViewHolder>() {

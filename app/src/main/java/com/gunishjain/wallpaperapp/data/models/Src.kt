@@ -1,4 +1,4 @@
-package com.gunishjain.wallpaperapp
+package com.gunishjain.wallpaperapp.data.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

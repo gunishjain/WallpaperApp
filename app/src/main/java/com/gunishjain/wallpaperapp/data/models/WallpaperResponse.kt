@@ -1,4 +1,4 @@
-package com.gunishjain.wallpaperapp
+package com.gunishjain.wallpaperapp.data.models
 
 data class WallpaperResponse(
     val next_page: String,

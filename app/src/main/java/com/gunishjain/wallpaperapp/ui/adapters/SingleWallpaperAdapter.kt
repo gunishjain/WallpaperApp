@@ -1,15 +1,29 @@
-package com.gunishjain.wallpaperapp.adapters
+package com.gunishjain.wallpaperapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import com.gunishjain.wallpaperapp.Photo
+import com.gunishjain.wallpaperapp.data.models.Photo
 import com.gunishjain.wallpaperapp.databinding.SingleWallpaperViewBinding
+import com.gunishjain.wallpaperapp.ui.fragments.SetWallpaperDialogue
 
-class SingleWallpaperAdapter(private val wallpaperList: ArrayList<Photo>,private val viewPager2: ViewPager2)
-    :RecyclerView.Adapter<SingleWallpaperAdapter.SingleImageViewHolder>() {
+class SingleWallpaperAdapter() :RecyclerView.Adapter<SingleWallpaperAdapter.SingleImageViewHolder>() {
+
+    private var wallpaperList = ArrayList<Photo>()
+    private lateinit var viewPager2: ViewPager2
+    private var onItemClick: ((Photo) -> Unit)? = null
+
+    fun setWallpaperViewPager(wallpaperList : ArrayList<Photo>, viewPager2: ViewPager2){
+        this.wallpaperList=wallpaperList
+        this.viewPager2=viewPager2
+
+    }
+
+    fun setOnItemClickListener(listener: (Photo) -> Unit) {
+        onItemClick = listener
+    }
 
     class SingleImageViewHolder(val binding:SingleWallpaperViewBinding)
         : RecyclerView.ViewHolder(binding.root)
@@ -33,6 +47,14 @@ class SingleWallpaperAdapter(private val wallpaperList: ArrayList<Photo>,private
         if(position==wallpaperList.size-1){
             viewPager2.post(runnable)
         }
+
+
+        holder.binding.imgSetWallPaper.setOnClickListener {
+            val wallpaper = wallpaperList[position]
+            onItemClick?.invoke(wallpaper)
+        }
+
+
     }
 
     private val runnable = Runnable {

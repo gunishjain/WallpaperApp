@@ -7,19 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.gunishjain.wallpaperapp.Photo
-import com.gunishjain.wallpaperapp.adapters.WallpaperListAdapter
+import com.gunishjain.wallpaperapp.data.models.Photo
+import com.gunishjain.wallpaperapp.ui.adapters.WallpaperListAdapter
 
 
 import com.gunishjain.wallpaperapp.databinding.FragmentWallpapersListBinding
 import com.gunishjain.wallpaperapp.ui.activities.WallpaperViewPagerActivity
-import com.gunishjain.wallpaperapp.viewmodels.WallPaperListViewModel
+import com.gunishjain.wallpaperapp.ui.viewmodels.WallPaperListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 
-
+@AndroidEntryPoint
 class WallpapersListFragment : Fragment() {
 
     private lateinit var binding: FragmentWallpapersListBinding

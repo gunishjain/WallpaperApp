@@ -15,15 +15,17 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
-import com.gunishjain.wallpaperapp.Photo
-import com.gunishjain.wallpaperapp.adapters.SingleWallpaperAdapter
+import com.gunishjain.wallpaperapp.data.models.Photo
+import com.gunishjain.wallpaperapp.ui.adapters.SingleWallpaperAdapter
 import com.gunishjain.wallpaperapp.databinding.ActivityWallpaperViewPagerBinding
-import com.gunishjain.wallpaperapp.viewmodels.WallPaperListViewModel
+import com.gunishjain.wallpaperapp.ui.fragments.SetWallpaperDialogue
+import com.gunishjain.wallpaperapp.ui.viewmodels.WallPaperListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class WallpaperViewPagerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWallpaperViewPagerBinding
@@ -32,10 +34,7 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
     private var category : String? = null
     private var singlePhoto : Photo? = null
     private lateinit var photoListWithSinglePhoto: ArrayList<Photo>
-
-
     private var palette: Palette? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,10 +54,10 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
 
         category?.let { wallpaperListVM.getWallPaperList(it) }
 
-        singleWallpaperAdapter = SingleWallpaperAdapter(photoListWithSinglePhoto,binding.viewPager2)
+        singleWallpaperAdapter = SingleWallpaperAdapter()
+        singleWallpaperAdapter.setWallpaperViewPager(photoListWithSinglePhoto,binding.viewPager2)
         binding.viewPager2.adapter = singleWallpaperAdapter
 
-        observeWallPaperList()
 
         observeWallPaperList()
         setupTransformer()
@@ -67,10 +66,9 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
 
-
                 val currentPhoto = photoListWithSinglePhoto[position]
 
-                val imageUrl = currentPhoto.src.large  // Choose the appropriate URL based on your requirements
+                val imageUrl = currentPhoto.src.portrait
 
 
                 Glide.with(applicationContext)
@@ -78,12 +76,11 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
                     .load(imageUrl)
                     .into(object : SimpleTarget<Bitmap>() {
                         override fun onResourceReady(bitmap: Bitmap, transition: Transition<in Bitmap>?) {
-                            // Use the bitmap for palette generation
                             palette = Palette.from(bitmap).generate()
                         }
 
                         override fun onLoadFailed(errorDrawable: Drawable?) {
-                            Log.d("viewpageractivity",errorDrawable.toString())
+                            Log.d("ViewPagerActivity",errorDrawable.toString())
                         }
                     })
 
@@ -93,7 +90,17 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
                 binding.viewPager2.background = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(startColor, endColor))
             }
         })
+
+        onSetWallpaperClick()
+
     }
+
+    private fun onSetWallpaperClick() {
+        singleWallpaperAdapter.setOnItemClickListener {photo->
+            SetWallpaperDialogue(photo).show(supportFragmentManager,"SetWallpaperDialogFragment")
+        }
+    }
+
 
     private fun setupTransformer() {
         val transformer = CompositePageTransformer()
@@ -106,12 +113,11 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
         binding.viewPager2.setPageTransformer(transformer)
     }
 
-
     private fun observeWallPaperList() {
         wallpaperListVM.observeWallpaperListLiveData().observe(this) { photoList ->
 
             photoListWithSinglePhoto.addAll(photoList)
-            singleWallpaperAdapter = SingleWallpaperAdapter(photoListWithSinglePhoto,binding.viewPager2)
+            singleWallpaperAdapter.setWallpaperViewPager(photoListWithSinglePhoto,binding.viewPager2)
             binding.viewPager2.apply {
                 offscreenPageLimit=3
                 clipToPadding=false
@@ -122,13 +128,4 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-    }
 }
