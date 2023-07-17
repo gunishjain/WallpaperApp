@@ -13,8 +13,11 @@ interface WallpaperDAO {
     @Delete
     suspend fun deleteWallpaper(wallpaper: Photo)
 
-    @Query("SELECT * FROM wallpapers_table")
-    fun getWallpapers():LiveData<List<Photo>>
+    @Query("SELECT * FROM wallpapers_table ORDER BY id DESC")
+    suspend fun getWallpapers():List<Photo>
+
+    @Query("SELECT * FROM wallpapers_table WHERE id=:id")
+    fun getWallpaperById(id: Int) : LiveData<Photo>
 
 
 }

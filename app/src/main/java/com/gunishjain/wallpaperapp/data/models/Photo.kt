@@ -14,7 +14,7 @@ data class Photo(
     val height: Int,
     @PrimaryKey
     val id: Int,
-    val liked: Boolean,
+    var liked: Boolean=false,
     val photographer: String,
     val photographer_id: Int,
     val photographer_url: String,

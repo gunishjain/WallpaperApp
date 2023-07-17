@@ -19,9 +19,9 @@
         android:id="@+id/img_favourite"
         android:layout_width="@dimen/_33sdp"
         android:layout_height="@dimen/_33sdp"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="bottom|end"
         android:scaleType="centerCrop"
-        android:layout_marginRight="@dimen/_25sdp"
+        android:layout_marginEnd="@dimen/_25sdp"
         android:layout_marginBottom="@dimen/_25sdp"
         android:src="@drawable/favorite_24"
         />

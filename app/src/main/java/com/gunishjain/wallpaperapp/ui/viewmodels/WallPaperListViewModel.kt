@@ -6,14 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gunishjain.wallpaperapp.data.models.Photo
-import com.gunishjain.wallpaperapp.data.models.WallpaperResponse
-import com.gunishjain.wallpaperapp.data.api.RetrofitInstance
 import com.gunishjain.wallpaperapp.data.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 

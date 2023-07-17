@@ -4,11 +4,11 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.gunishjain.wallpaperapp.data.api.WallpaperAPI
+import com.gunishjain.wallpaperapp.data.db.WallpaperDAO
 import com.gunishjain.wallpaperapp.data.db.WallpaperDatabase
 import com.gunishjain.wallpaperapp.data.repository.Repository
-import com.gunishjain.wallpaperapp.data.repository.RepositoryImpl
 import com.gunishjain.wallpaperapp.util.Constants
-import com.gunishjain.wallpaperapp.util.Constants.Companion.WALLPAPAPER_DB_NAME
+import com.gunishjain.wallpaperapp.util.Constants.Companion.WALLPAPER_DB_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,8 +44,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRepository(api: WallpaperAPI,app: Application) : Repository {
-        return RepositoryImpl(api,app)
+    fun provideRepository(api: WallpaperAPI,app: Application,dao:WallpaperDAO) : Repository {
+        return Repository(api,app,dao)
     }
 
     @Provides
@@ -54,7 +54,7 @@ object AppModule {
         @ApplicationContext app:Context) = Room.databaseBuilder(
             app,
             WallpaperDatabase::class.java,
-            WALLPAPAPER_DB_NAME
+            WALLPAPER_DB_NAME,
         ).build()
 
     @Singleton

@@ -8,7 +8,9 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -22,6 +24,7 @@ import com.gunishjain.wallpaperapp.ui.adapters.SingleWallpaperAdapter
 import com.gunishjain.wallpaperapp.databinding.ActivityWallpaperViewPagerBinding
 import com.gunishjain.wallpaperapp.ui.fragments.SetWallpaperDialogue
 import com.gunishjain.wallpaperapp.ui.viewmodels.WallPaperListViewModel
+import com.gunishjain.wallpaperapp.ui.viewmodels.WallpaperViewPagerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -30,11 +33,13 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWallpaperViewPagerBinding
     private lateinit var singleWallpaperAdapter: SingleWallpaperAdapter
+    private val wallpaperVPVM: WallpaperViewPagerViewModel by viewModels()
     private val wallpaperListVM: WallPaperListViewModel by viewModels()
     private var category : String? = null
     private var singlePhoto : Photo? = null
     private lateinit var photoListWithSinglePhoto: ArrayList<Photo>
     private var palette: Palette? = null
+    private var savedWallpapers: List<Photo> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,13 +49,13 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
 
         category = intent.getStringExtra("category")
         singlePhoto = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra<Photo>("photo", Photo::class.java)
+            intent.getParcelableExtra("photo", Photo::class.java)
         } else {
             intent.getParcelableExtra("photo") as Photo?
         }
 
         photoListWithSinglePhoto = ArrayList()
-        photoListWithSinglePhoto.add(singlePhoto!!)
+//        photoListWithSinglePhoto.add(singlePhoto!!)
 
         category?.let { wallpaperListVM.getWallPaperList(it) }
 
@@ -58,6 +63,8 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
         singleWallpaperAdapter.setWallpaperViewPager(photoListWithSinglePhoto,binding.viewPager2)
         binding.viewPager2.adapter = singleWallpaperAdapter
 
+        wallpaperVPVM.getSavedWallpapers()
+        observeSavedWallpapers()
 
         observeWallPaperList()
         setupTransformer()
@@ -92,6 +99,20 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
         })
 
         onSetWallpaperClick()
+        onWallpaperSave()
+
+    }
+
+    private fun observeSavedWallpapers() {
+
+        wallpaperVPVM.observeSavedWallpapers().observe(this) {savedList->
+
+            if(savedList.isNullOrEmpty()){
+                Toast.makeText(this,"Empty List",Toast.LENGTH_SHORT).show()
+            } else {
+                savedWallpapers = savedList
+            }
+        }
 
     }
 
@@ -101,6 +122,21 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
         }
     }
 
+    private fun onWallpaperSave(){
+        singleWallpaperAdapter.setOnItemClickListener {photo->
+
+            if(!photo.liked){
+                photo.liked=true
+                wallpaperVPVM.insertWallpaper(photo)
+                Toast.makeText(this,"Wallpaper Saved",Toast.LENGTH_SHORT).show()
+            } else {
+                photo.liked=false
+                wallpaperVPVM.deleteWallpaper(photo)
+            }
+
+            singleWallpaperAdapter.notifyDataSetChanged()
+        }
+    }
 
     private fun setupTransformer() {
         val transformer = CompositePageTransformer()
@@ -116,7 +152,23 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
     private fun observeWallPaperList() {
         wallpaperListVM.observeWallpaperListLiveData().observe(this) { photoList ->
 
-            photoListWithSinglePhoto.addAll(photoList)
+            // Updates liked field of wallpapers from API based on Saved Wallpapers
+            for (photo in photoList) {
+                // Find the corresponding saved wallpaper photo.
+                val savedWallpaperPhoto = savedWallpapers.find { it.id == photo.id }
+                // If the saved wallpaper photo is found, update the photo list object's liked property.
+                if (savedWallpaperPhoto != null) {
+                    photo.liked = savedWallpaperPhoto.liked
+                }
+            }
+
+            val index = photoList.indexOfFirst { it.id == singlePhoto!!.id }
+            val photoArray = photoList.toMutableList()
+            val photoClicked = photoList[index]
+            photoArray.removeAt(index)
+            photoArray.add(0,photoClicked)
+
+            photoListWithSinglePhoto.addAll(photoArray)
             singleWallpaperAdapter.setWallpaperViewPager(photoListWithSinglePhoto,binding.viewPager2)
             binding.viewPager2.apply {
                 offscreenPageLimit=3
