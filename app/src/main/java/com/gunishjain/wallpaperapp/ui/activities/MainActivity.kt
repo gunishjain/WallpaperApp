@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.gunishjain.wallpaperapp.R
 import com.gunishjain.wallpaperapp.ui.adapters.CategoryListAdapter
 import com.gunishjain.wallpaperapp.databinding.ActivityMainBinding
+import com.gunishjain.wallpaperapp.ui.fragments.FavouriteWallpaperFragment
 import com.gunishjain.wallpaperapp.ui.fragments.WallpapersListFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var categoryListAdapter: CategoryListAdapter
     private val fragment = WallpapersListFragment()
+    private val favouriteFragment = FavouriteWallpaperFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +48,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.favourite -> Toast.makeText(applicationContext,
-                    "Clicked on Fav",Toast.LENGTH_SHORT).show()
+                R.id.favourite -> gotoFavouriteFragment()
 
                 R.id.categories ->Toast.makeText(applicationContext,
                     "Clicked on Category",Toast.LENGTH_SHORT).show()
@@ -63,6 +64,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
+    private fun gotoFavouriteFragment(){
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(binding.fragmentContainer.id, favouriteFragment)
+        fragmentTransaction.addToBackStack("favourite_fragment")
+        fragmentTransaction.commit()
+    }
     private fun onCategoryClick() {
         categoryListAdapter.setOnItemClickListener { category ->
             fragment.updateCategory(category)

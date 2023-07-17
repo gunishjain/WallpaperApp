@@ -18,6 +18,7 @@ class WallPaperListViewModel @Inject constructor(
 ):ViewModel() {
 
     private var wallpaperListLiveData = MutableLiveData<List<Photo>>()
+    private var favWallpaperLiveData = MutableLiveData<List<Photo>>()
 
     fun getWallPaperList(category: String){
 
@@ -34,8 +35,21 @@ class WallPaperListViewModel @Inject constructor(
 
     }
 
+    fun getSavedWallpapers() {
+        viewModelScope.launch {
+            val savedWallpapers = repository.getWallpapers()
+
+            Log.d("favwall",savedWallpapers.toString())
+            favWallpaperLiveData.postValue(savedWallpapers)
+        }
+    }
+
     fun observeWallpaperListLiveData() : LiveData<List<Photo>>{
         return wallpaperListLiveData
+    }
+
+    fun observeFavWallpapersListLiveData() : LiveData<List<Photo>>{
+        return favWallpaperLiveData
     }
 
 }
