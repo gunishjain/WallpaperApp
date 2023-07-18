@@ -1,12 +1,15 @@
 package com.gunishjain.wallpaperapp.ui.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.gunishjain.wallpaperapp.data.models.Photo
 import com.gunishjain.wallpaperapp.ui.adapters.WallpaperListAdapter
@@ -76,7 +79,11 @@ class WallpapersListFragment : Fragment() {
     private fun observeWallPaperList() {
         wallpaperListVM.observeWallpaperListLiveData().observe(viewLifecycleOwner
         ) { photosList->
-            wallpaperListAdapter.setWallpaperList(photosList as ArrayList<Photo>)
+            if(!photosList.isNullOrEmpty()){
+                wallpaperListAdapter.setWallpaperList(photosList as ArrayList<Photo>)
+            } else {
+                Log.d("wplistfragment: ",photosList.size.toString())
+            }
         }
     }
 

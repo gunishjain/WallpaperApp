@@ -27,8 +27,9 @@ class WallPaperListViewModel @Inject constructor(
                 val wallpaperResponse = repository.searchBasedOnCategory(category)
                 val photos = wallpaperResponse.photos
                 wallpaperListLiveData.value = photos
+                Log.d("Wplistvm",photos.toString())
             } catch (e: Exception){
-                Log.d("Wallpaperlsitvm",e.toString())
+                Log.d("Wplistvm",e.toString())
                 wallpaperListLiveData.value = emptyList()
             }
         }
