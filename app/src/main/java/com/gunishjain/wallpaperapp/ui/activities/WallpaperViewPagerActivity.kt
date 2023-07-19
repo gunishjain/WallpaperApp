@@ -100,7 +100,15 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
 
         onSetWallpaperClick()
         onWallpaperSave()
+        onWallpaperDownload()
 
+    }
+
+    private fun onWallpaperDownload() {
+        singleWallpaperAdapter.setOnDownloadClickListener {wallpaper->
+            wallpaperVPVM.downloadWallpaper(wallpaper)
+            Toast.makeText(applicationContext,"Wallpaper Downloaded",Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun observeSavedWallpapers() {
@@ -117,13 +125,13 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
     }
 
     private fun onSetWallpaperClick() {
-        singleWallpaperAdapter.setOnItemClickListener {photo->
+        singleWallpaperAdapter.setOnWPItemClickListener {photo->
             SetWallpaperDialogue(photo).show(supportFragmentManager,"SetWallpaperDialogFragment")
         }
     }
 
     private fun onWallpaperSave(){
-        singleWallpaperAdapter.setOnItemClickListener {photo->
+        singleWallpaperAdapter.setOnFavItemClickListener {photo->
 
             if(!photo.liked){
                 photo.liked=true

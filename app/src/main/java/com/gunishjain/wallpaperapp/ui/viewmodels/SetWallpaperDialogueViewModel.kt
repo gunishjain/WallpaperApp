@@ -4,6 +4,7 @@ import android.app.WallpaperManager
 import android.graphics.Bitmap
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -29,13 +30,13 @@ class SetWallpaperDialogueViewModel @Inject constructor(
     fun setWallPaper(wpFlag: Int,wallpaper: Photo){
 
         viewModelScope.launch {
-            val requestOptions = RequestOptions().override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-            val wallpaperBitmap = Glide.with(context)
-                .asBitmap()
-                .load(wallpaper.src.portrait)
-                .apply(requestOptions)
-                .submit()
-                .get()
+
+            try {
+                val wallpaperBitmap = Glide.with(context)
+                    .asBitmap()
+                    .load(wallpaper.src.portrait)
+                    .submit()
+                    .get()
 
                 when (wpFlag) {
                     1 -> wallpaperManager.setBitmap(
@@ -51,6 +52,9 @@ class SetWallpaperDialogueViewModel @Inject constructor(
                         WallpaperManager.FLAG_LOCK or WallpaperManager.FLAG_SYSTEM
                     )
                 }
+            } catch (e: Exception){
+                Log.d("setwallpapervm",e.toString())
+            }
         }
     }
 

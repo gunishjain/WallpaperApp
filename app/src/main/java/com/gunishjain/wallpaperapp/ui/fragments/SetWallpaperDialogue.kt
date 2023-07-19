@@ -1,6 +1,7 @@
 package com.gunishjain.wallpaperapp.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,16 +32,18 @@ class SetWallpaperDialogue(wallpaper: Photo) : DialogFragment() {
     ): View? {
         binding = FragmentSetWallpaperDialogueBinding.inflate(inflater,container,false)
 
-        val wpFlag: Int = when(binding.radioGroup.checkedRadioButtonId){
-            R.id.setHome-> 1
-            R.id.setLock-> 2
-            R.id.setBoth-> 3
-            else -> 0
-        }
-
-
         binding.btnApply.setOnClickListener {
+
+            val wpFlag: Int = when(binding.radioGroup.checkedRadioButtonId){
+                R.id.setHome-> 1
+                R.id.setLock-> 2
+                R.id.setBoth-> 3
+                else -> 0
+            }
+
+            Log.d("wpdialoguefragment",wpFlag.toString())
             setWPDialogueVM.setWallPaper(wpFlag,wallpaper)
+            dismiss()
         }
 
         binding.btnCancel.setOnClickListener {

@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.gunishjain.wallpaperapp.data.models.Photo
 import com.gunishjain.wallpaperapp.data.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,6 +32,17 @@ class WallpaperViewPagerViewModel @Inject constructor(
     fun getWallpaperById(id: Int) = viewModelScope.launch {
         val wallpaper = repository.getWallpaperById(id)
         wallpaperLiveData.value= wallpaper.value
+    }
+
+    fun downloadWallpaper(wallpaper: Photo){
+        viewModelScope.launch (Dispatchers.IO){
+            try {
+                repository.downloadWallpaper(wallpaper)
+            } catch (e: Exception){
+                Log.d("WallpaperVPVM",e.toString())
+            }
+
+        }
     }
 
     fun getSavedWallpapers() {

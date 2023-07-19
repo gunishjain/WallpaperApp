@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.fragment.app.Fragment
 import com.gunishjain.wallpaperapp.R
 import com.gunishjain.wallpaperapp.ui.adapters.CategoryListAdapter
 import com.gunishjain.wallpaperapp.databinding.ActivityMainBinding
@@ -75,9 +76,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateCategory(category: String) {
-        val wallpapersListFragment =
-            supportFragmentManager.findFragmentById(binding.fragmentContainer.id) as? WallpapersListFragment
-        wallpapersListFragment?.updateCategory(category)
+
+        val wallpapersListFragment = WallpapersListFragment()
+        wallpapersListFragment.arguments = Bundle().apply {
+            putString("category", category)
+        }
+        val fragmentManager = supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(binding.fragmentContainer.id, wallpapersListFragment)
+        transaction.commit()
     }
 
 

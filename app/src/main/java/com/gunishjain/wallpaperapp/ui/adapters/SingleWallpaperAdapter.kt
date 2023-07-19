@@ -15,7 +15,9 @@ class SingleWallpaperAdapter() :RecyclerView.Adapter<SingleWallpaperAdapter.Sing
 
     private var wallpaperList = ArrayList<Photo>()
     private lateinit var viewPager2: ViewPager2
-    private var onItemClick: ((Photo) -> Unit)? = null
+    private var onFavItemClick: ((Photo) -> Unit)? = null
+    private var onSetWPItemClick: ((Photo) -> Unit)? = null
+    private var onSetDownloadItemClick: ((Photo) -> Unit)? = null
 
     fun setWallpaperViewPager(wallpaperList : ArrayList<Photo>, viewPager2: ViewPager2){
         this.wallpaperList=wallpaperList
@@ -24,8 +26,16 @@ class SingleWallpaperAdapter() :RecyclerView.Adapter<SingleWallpaperAdapter.Sing
 
     }
 
-    fun setOnItemClickListener(listener: (Photo) -> Unit) {
-        onItemClick = listener
+    fun setOnFavItemClickListener(listener: (Photo) -> Unit) {
+        onFavItemClick = listener
+    }
+
+    fun setOnWPItemClickListener(listener: (Photo) -> Unit) {
+        onSetWPItemClick = listener
+    }
+
+    fun setOnDownloadClickListener(listener: (Photo) -> Unit){
+        onSetDownloadItemClick=listener
     }
 
     class SingleImageViewHolder(val binding:SingleWallpaperViewBinding)
@@ -57,11 +67,15 @@ class SingleWallpaperAdapter() :RecyclerView.Adapter<SingleWallpaperAdapter.Sing
         }
 
         holder.binding.imgSetWallPaper.setOnClickListener {
-            onItemClick?.invoke(wallpaper)
+            onSetWPItemClick?.invoke(wallpaper)
         }
 
         holder.binding.imgFavourite.setOnClickListener{
-            onItemClick?.invoke(wallpaper)
+            onFavItemClick?.invoke(wallpaper)
+        }
+
+        holder.binding.imgDownload.setOnClickListener {
+            onSetDownloadItemClick?.invoke(wallpaper)
         }
 
     }

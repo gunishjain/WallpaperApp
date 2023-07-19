@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/wallpaper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_35sdp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:id="@+id/image_view_left"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/favorite_24" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_centerInParent="true"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:id="@+id/text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set Wallpaper"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:layout_gravity="center"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/image_view_right"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/favorite_24" />
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
