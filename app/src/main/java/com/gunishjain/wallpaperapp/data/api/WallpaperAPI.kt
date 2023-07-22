@@ -17,7 +17,7 @@ interface WallpaperAPI {
         @Query("query")
         searchQuery:String = "nature",
         @Query("page")
-        pageNumber:Int = 1,
+        pageNumber:Int
     ): WallpaperResponse
 
 }

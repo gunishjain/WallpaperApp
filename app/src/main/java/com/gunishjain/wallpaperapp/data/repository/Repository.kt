@@ -8,11 +8,17 @@ import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Environment
 import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.bumptech.glide.Glide
 import com.gunishjain.wallpaperapp.data.api.WallpaperAPI
 import com.gunishjain.wallpaperapp.data.db.WallpaperDAO
 import com.gunishjain.wallpaperapp.data.models.Photo
 import com.gunishjain.wallpaperapp.data.models.WallpaperResponse
+import com.gunishjain.wallpaperapp.paging.WallpaperPagingSource
+import kotlinx.coroutines.flow.Flow
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
@@ -23,8 +29,17 @@ class Repository @Inject constructor(
     private val wallpaperDao: WallpaperDAO
 ) {
 
-     suspend fun searchBasedOnCategory(category: String): WallpaperResponse {
-        return api.searchBasedOnCategory(category)
+     suspend fun searchBasedOnCategory(category: String,pageNumber:Int): WallpaperResponse {
+        return api.searchBasedOnCategory(category,pageNumber)
+    }
+
+    fun searchPagination(category: String): Flow<PagingData<Photo>> {
+        return Pager(
+            config= PagingConfig(pageSize = 20 ),
+            pagingSourceFactory = {
+                WallpaperPagingSource(api,category)
+            }
+        ).flow
     }
 
      fun getApplicationContext(): Application {
@@ -55,23 +70,6 @@ class Repository @Inject constructor(
             .load(wallpaper.src.portrait)
             .submit()
             .get()
-
-//        val sourceWidth: Int = wallpaper.width
-//        val sourceHeight: Int = wallpaper.height
-//
-//        var targetWidth = 1080
-//        var targetHeight = 2400
-//
-//        val sourceRatio = sourceWidth.toFloat() / sourceHeight.toFloat()
-//        val targetRatio = targetWidth.toFloat() / targetHeight.toFloat()
-//
-//        if (targetRatio > sourceRatio) {
-//            targetWidth = (targetHeight.toFloat() * sourceRatio).toInt()
-//        } else {
-//            targetHeight = (targetWidth.toFloat() / sourceRatio).toInt()
-//        }
-
-//        val resizedBitmap=Bitmap.createScaledBitmap(wallpaperBitmap,targetWidth,targetHeight,true)
 
         val fileName = "${System.currentTimeMillis()}.jpg"
         val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), fileName)

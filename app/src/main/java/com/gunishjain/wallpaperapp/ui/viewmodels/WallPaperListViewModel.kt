@@ -5,9 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.*
 import com.gunishjain.wallpaperapp.data.models.Photo
 import com.gunishjain.wallpaperapp.data.repository.Repository
+import com.gunishjain.wallpaperapp.paging.WallpaperPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,12 +23,15 @@ class WallPaperListViewModel @Inject constructor(
 
     private var wallpaperListLiveData = MutableLiveData<List<Photo>>()
     private var favWallpaperLiveData = MutableLiveData<List<Photo>>()
+    private val _paginatedWallpapers = MutableStateFlow<PagingData<Photo>>(PagingData.empty())
+    val paginatedWallpapers= _paginatedWallpapers
+
 
     fun getWallPaperList(category: String){
 
         viewModelScope.launch {
             try {
-                val wallpaperResponse = repository.searchBasedOnCategory(category)
+                val wallpaperResponse = repository.searchBasedOnCategory(category,1)
                 val photos = wallpaperResponse.photos
                 wallpaperListLiveData.value = photos
                 Log.d("Wplistvm",photos.toString())
@@ -43,6 +50,15 @@ class WallPaperListViewModel @Inject constructor(
         }
     }
 
+
+    fun getWallpapersPaginated(category: String){
+        viewModelScope.launch {
+            repository.searchPagination(category).cachedIn(viewModelScope).collect{
+                paginatedWallpapers.value=it
+            }
+        }
+    }
+
     fun observeWallpaperListLiveData() : LiveData<List<Photo>>{
         return wallpaperListLiveData
     }
@@ -50,5 +66,6 @@ class WallPaperListViewModel @Inject constructor(
     fun observeFavWallpapersListLiveData() : LiveData<List<Photo>>{
         return favWallpaperLiveData
     }
+
 
 }
