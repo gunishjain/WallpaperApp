@@ -19,9 +19,11 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
+import com.gunishjain.wallpaperapp.R
 import com.gunishjain.wallpaperapp.data.models.Photo
 import com.gunishjain.wallpaperapp.ui.adapters.SingleWallpaperAdapter
 import com.gunishjain.wallpaperapp.databinding.ActivityWallpaperViewPagerBinding
+import com.gunishjain.wallpaperapp.ui.fragments.FullScreenFragment
 import com.gunishjain.wallpaperapp.ui.fragments.SetWallpaperDialogue
 import com.gunishjain.wallpaperapp.ui.viewmodels.WallPaperListViewModel
 import com.gunishjain.wallpaperapp.ui.viewmodels.WallpaperViewPagerViewModel
@@ -101,7 +103,21 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
         onSetWallpaperClick()
         onWallpaperSave()
         onWallpaperDownload()
+        onWallpaperClick()
 
+    }
+
+    private fun onWallpaperClick() {
+        singleWallpaperAdapter.setOnItemClickListener { photo->
+            val fragment = FullScreenFragment()
+
+            fragment.getPhotoData(photo)
+            supportFragmentManager.beginTransaction()
+                .replace(binding.fullscreenContainer.id, fragment)
+                .addToBackStack(null)
+                .commit()
+
+        }
     }
 
     private fun onWallpaperDownload() {

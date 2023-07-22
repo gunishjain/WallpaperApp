@@ -17,6 +17,7 @@ class SingleWallpaperAdapter() :RecyclerView.Adapter<SingleWallpaperAdapter.Sing
     private lateinit var viewPager2: ViewPager2
     private var onFavItemClick: ((Photo) -> Unit)? = null
     private var onSetWPItemClick: ((Photo) -> Unit)? = null
+    private var onWallpaperItemClick: ((Photo) -> Unit)? = null
     private var onSetDownloadItemClick: ((Photo) -> Unit)? = null
 
     fun setWallpaperViewPager(wallpaperList : ArrayList<Photo>, viewPager2: ViewPager2){
@@ -36,6 +37,10 @@ class SingleWallpaperAdapter() :RecyclerView.Adapter<SingleWallpaperAdapter.Sing
 
     fun setOnDownloadClickListener(listener: (Photo) -> Unit){
         onSetDownloadItemClick=listener
+    }
+
+    fun setOnItemClickListener(listener: (Photo) -> Unit) {
+        onWallpaperItemClick = listener
     }
 
     class SingleImageViewHolder(val binding:SingleWallpaperViewBinding)
@@ -64,6 +69,10 @@ class SingleWallpaperAdapter() :RecyclerView.Adapter<SingleWallpaperAdapter.Sing
 
         if(position==wallpaperList.size-1){
             viewPager2.post(runnable)
+        }
+
+        holder.binding.imgSingleWallpaper.setOnClickListener {
+            onWallpaperItemClick?.invoke(wallpaper)
         }
 
         holder.binding.imgSetWallPaper.setOnClickListener {

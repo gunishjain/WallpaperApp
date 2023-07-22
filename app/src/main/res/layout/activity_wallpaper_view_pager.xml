@@ -6,24 +6,35 @@
     android:layout_height="match_parent"
     tools:context=".ui.activities.WallpaperViewPagerActivity">
 
-
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingStart="@dimen/_40sdp"
-        android:paddingEnd="@dimen/_40sdp"
         android:paddingTop="@dimen/_40sdp"
+        android:paddingEnd="@dimen/_40sdp"
         android:paddingBottom="@dimen/_40sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5"
-        >
+        app:layout_constraintVertical_bias="0.5">
 
     </androidx.viewpager2.widget.ViewPager2>
+
+    <FrameLayout
+        android:id="@+id/fullscreen_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5">
+
+    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

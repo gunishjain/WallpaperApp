@@ -2,6 +2,7 @@ package com.gunishjain.wallpaperapp.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -18,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private val fragment = WallpapersListFragment()
     private val categoryFragment = CategoryListFragment()
     private val favouriteFragment = FavouriteWallpaperFragment()
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
+        setUpViews()
 
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
@@ -37,18 +38,9 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.commit()
 
 
-        toggle = ActionBarDrawerToggle(this,binding.drawerLayout, R.string.open, R.string.close)
-        binding.drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.favourite -> gotoFavouriteFragment()
-
-                R.id.categories ->Toast.makeText(applicationContext,
-                    "Clicked on Category",Toast.LENGTH_SHORT).show()
-
                 R.id.share ->Toast.makeText(applicationContext,
                     "Clicked on Shared",Toast.LENGTH_SHORT).show()
 
@@ -57,6 +49,26 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.toolbar_menu,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+
+    private fun setUpViews(){
+        setUpDrawerLayout()
+    }
+
+    private fun setUpDrawerLayout() {
+        setSupportActionBar(binding.appBar)
+        actionBarDrawerToggle = ActionBarDrawerToggle(this,binding.mainDrawer, R.string.open, R.string.close)
+        binding.mainDrawer.addDrawerListener(actionBarDrawerToggle)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBarDrawerToggle.syncState()
 
     }
 
@@ -69,11 +81,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(toggle.onOptionsItemSelected(item)){
+        if(actionBarDrawerToggle.onOptionsItemSelected(item)){
             return true
         }
         return super.onOptionsItemSelected(item)
     }
+
 
     fun updateCategory(category: String) {
 

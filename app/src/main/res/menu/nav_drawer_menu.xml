@@ -7,11 +7,6 @@
     </item>
 
     <item
-        android:id="@+id/categories"
-        android:title="Categories">
-    </item>
-
-    <item
         android:id="@+id/rating"
         android:title="Rate Us!">
     </item>

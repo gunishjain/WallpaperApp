@@ -56,6 +56,7 @@ class CategoryListFragment : Fragment() {
 
     private fun getCategoryList(): ArrayList<String> {
         return arrayListOf(
+            "All",
             "Nature",
             "Beach",
             "Space",
