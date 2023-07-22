@@ -1,5 +1,6 @@
 package com.gunishjain.wallpaperapp.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.gunishjain.wallpaperapp.R
 import com.gunishjain.wallpaperapp.data.models.Photo
 import com.gunishjain.wallpaperapp.databinding.FragmentFavouriteWallpaperBinding
 import com.gunishjain.wallpaperapp.databinding.FragmentWallpapersListBinding
+import com.gunishjain.wallpaperapp.ui.activities.WallpaperViewPagerActivity
 import com.gunishjain.wallpaperapp.ui.adapters.WallpaperListAdapter
 import com.gunishjain.wallpaperapp.ui.viewmodels.WallPaperListViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,6 +47,19 @@ class FavouriteWallpaperFragment : Fragment() {
         createFavWallPaperRV()
         observeFavWallPaperList()
         wallpaperListVM.getSavedWallpapers()
+        onFavWallpaperClick()
+    }
+
+    private fun onFavWallpaperClick() {
+        wallpaperListAdapter.setOnItemClickListener { photo->
+            val fragment = FullScreenFragment()
+
+            fragment.getPhotoData(photo)
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(binding.fullscreenContainer.id, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     private fun createFavWallPaperRV() {

@@ -6,9 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.fragment.app.Fragment
 import com.gunishjain.wallpaperapp.R
-import com.gunishjain.wallpaperapp.ui.adapters.CategoryListAdapter
 import com.gunishjain.wallpaperapp.databinding.ActivityMainBinding
 import com.gunishjain.wallpaperapp.ui.fragments.CategoryListFragment
 import com.gunishjain.wallpaperapp.ui.fragments.FavouriteWallpaperFragment

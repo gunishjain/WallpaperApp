@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:fitsSystemWindows="false"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false">
 
     <ImageView
         android:id="@+id/img_wallpaper"
@@ -10,14 +12,36 @@
         android:layout_height="match_parent"
         android:scaleType="fitXY" />
 
+
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/btn_dialog"
+        app:layout_constraintBottom_toTopOf="@+id/linear_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/img_wallpaper"
+        app:layout_constraintVertical_bias="0.06">
+
+    </ImageButton>
+
     <LinearLayout
+        android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_35sdp"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.89">
 
         <ImageView
-            android:id="@+id/image_view_left"
+            android:id="@+id/img_fav"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="20dp"
@@ -25,14 +49,14 @@
             android:src="@drawable/favorite_24" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/card_view"
+            android:id="@+id/cv_setWallpaper"
             android:layout_width="@dimen/_150sdp"
             android:layout_height="@dimen/_25sdp"
-            android:layout_centerInParent="true"
-            android:layout_margin="20dp">
+            android:layout_margin="20dp"
+            android:background="@color/purple_200">
 
             <TextView
-                android:id="@+id/text_view"
+                android:id="@+id/tv_setWallpaper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -44,14 +68,14 @@
         </androidx.cardview.widget.CardView>
 
         <ImageView
-            android:id="@+id/image_view_right"
+            android:id="@+id/img_download"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="20dp"
-            android:src="@drawable/favorite_24" />
+            android:src="@drawable/ic_setwp" />
 
 
     </LinearLayout>
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,7 @@ import com.bumptech.glide.request.target.Target
 import com.gunishjain.wallpaperapp.data.repository.Repository
 import com.gunishjain.wallpaperapp.data.models.Photo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,7 +30,7 @@ class SetWallpaperDialogueViewModel @Inject constructor(
 
     fun setWallPaper(wpFlag: Int,wallpaper: Photo){
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
 
             try {
                 val wallpaperBitmap = Glide.with(context)
@@ -53,7 +54,7 @@ class SetWallpaperDialogueViewModel @Inject constructor(
                     )
                 }
             } catch (e: Exception){
-                Log.d("setwallpapervm",e.toString())
+                Log.d("setwallpaperdialoguevm",e.toString())
             }
         }
     }

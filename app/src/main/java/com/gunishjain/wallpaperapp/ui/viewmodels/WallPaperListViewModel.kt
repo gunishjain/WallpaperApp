@@ -39,8 +39,6 @@ class WallPaperListViewModel @Inject constructor(
     fun getSavedWallpapers() {
         viewModelScope.launch {
             val savedWallpapers = repository.getWallpapers()
-
-            Log.d("favwall",savedWallpapers.toString())
             favWallpaperLiveData.postValue(savedWallpapers)
         }
     }
