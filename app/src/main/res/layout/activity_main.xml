@@ -36,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
+            android:background="@color/secondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -62,9 +63,11 @@
         android:id="@+id/navView"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_drawer_menu"
+        android:background="@color/secondary"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        app:itemTextColor="@color/font"
         android:fitsSystemWindows="true">
 
     </com.google.android.material.navigation.NavigationView>

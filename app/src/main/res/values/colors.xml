@@ -8,4 +8,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#ff0000</color>
+
+    <color name="primary">#f1dab1</color>
+    <color name="primary_var">#eeb77f</color>
+    <color name="onPrimary">#d99477</color>
+    <color name="secondary">#fbeed7</color>
+    <color name="secondary_var">#d99477</color>
+    <color name="onSecondary">#eeb77f</color>
+    <color name="font">#a15e42</color>
+
+
 </resources>
