@@ -1,6 +1,6 @@
 package com.gunishjain.wallpaperapp.ui.fragments
 
-import android.content.Intent
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,11 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.gunishjain.wallpaperapp.R
 import com.gunishjain.wallpaperapp.databinding.FragmentSearchWallpaperBinding
-import com.gunishjain.wallpaperapp.databinding.FragmentWallpapersListBinding
 import com.gunishjain.wallpaperapp.paging.WallpaperPagingAdapter
-import com.gunishjain.wallpaperapp.ui.activities.WallpaperViewPagerActivity
 import com.gunishjain.wallpaperapp.ui.viewmodels.WallPaperListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -58,6 +55,19 @@ class SearchWallpaperFragment : Fragment() {
             observeWallPaperList()
 
         }
+
+        onWallpaperClick()
+    }
+
+    private fun onWallpaperClick() {
+        wallpaperPagingAdapter.setOnItemClickListener {photo->
+            val fragment = FullScreenFragment()
+            fragment.getPhotoData(photo)
+            childFragmentManager.beginTransaction()
+                .replace(binding.fragmentContainer.id, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     private fun observeWallPaperList() {
@@ -70,7 +80,7 @@ class SearchWallpaperFragment : Fragment() {
     }
 
     private fun createWallPaperListRV() {
-        binding.rvSearchWallPapers.apply {
+        binding.rvSearchWallpaper.apply {
             layoutManager = GridLayoutManager(activity,3, GridLayoutManager.VERTICAL,false)
             setHasFixedSize(true)
             adapter=wallpaperPagingAdapter

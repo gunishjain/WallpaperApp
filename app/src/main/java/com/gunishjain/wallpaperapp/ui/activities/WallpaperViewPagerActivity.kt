@@ -79,7 +79,9 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
 
         binding.viewPager2.adapter = singleWallpaperAdapter
 
-
+        binding.imgBack.setOnClickListener {
+            finish()
+        }
 
         wallpaperVPVM.getSavedWallpapers()
         observeSavedWallpapers()
@@ -92,18 +94,13 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
 
-//                val currentPhoto = photoListWithSinglePhoto[position]
                 val currentList = singleWallpaperAdapter.snapshot().items
 
                 // Check if the position is valid within the current list
                 if (position >= 0 && position < currentList.size) {
                     // Get the current photo from the list
                     val currentPhoto = currentList[position]
-
-
                     val imageUrl = currentPhoto.src.portrait
-
-
                     Glide.with(applicationContext)
                         .asBitmap()
                         .load(imageUrl)

@@ -34,7 +34,7 @@ class WallpapersListFragment : Fragment() {
     private val wallpaperListVM: WallPaperListViewModel by viewModels()
 //    private lateinit var wallpaperListAdapter: WallpaperListAdapter
     private lateinit var wallpaperPagingAdapter : WallpaperPagingAdapter
-    private var currentCategory: String = "nature"
+    private var currentCategory: String = "All"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

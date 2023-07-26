@@ -23,7 +23,7 @@
         android:scaleType="centerCrop"
         android:layout_marginEnd="@dimen/_25sdp"
         android:layout_marginBottom="@dimen/_25sdp"
-        android:src="@drawable/favorite_24"
+        android:src="@drawable/ic_fav"
         />
 
     <ImageView
@@ -34,7 +34,7 @@
         android:scaleType="centerCrop"
         android:layout_marginLeft="@dimen/_25sdp"
         android:layout_marginBottom="@dimen/_25sdp"
-        android:src="@drawable/download24"
+        android:src="@drawable/ic_download"
          />
 
     <ImageView
@@ -44,7 +44,7 @@
         android:layout_gravity="bottom|center"
         android:scaleType="centerCrop"
         android:layout_marginBottom="@dimen/_20sdp"
-        android:src="@drawable/ic_setwp"
+        android:src="@drawable/ic_check"
          />
 
 </androidx.cardview.widget.CardView>

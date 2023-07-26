@@ -4,7 +4,11 @@ package com.gunishjain.wallpaperapp.ui.fragments
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -24,19 +28,6 @@ class FullScreenFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val window = requireActivity().window
-
-        // Get the decor view
-        val decorView = window.decorView
-
-        // Set the system UI visibility flags
-        val flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
-                View.SYSTEM_UI_FLAG_FULLSCREEN or
-                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-
-        decorView.systemUiVisibility = flags
     }
 
     override fun onCreateView(
@@ -53,6 +44,11 @@ class FullScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val window = requireActivity().window
+        val mainContainer = view.findViewById<ConstraintLayout>(R.id.constraint_layout)
+
+        hideSystemUI(window,mainContainer)
 
         setWallpaper()
         onWallpaperDownload()
@@ -109,7 +105,7 @@ class FullScreenFragment : Fragment() {
         }
     }
 
-    fun closeCurrentFragment() {
+    private fun closeCurrentFragment() {
         val fragmentManager = requireActivity().supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
 
@@ -125,6 +121,19 @@ class FullScreenFragment : Fragment() {
         }
 
         fragmentTransaction.commit()
+    }
+
+    private fun hideSystemUI(window: Window,mainContainer: ConstraintLayout) {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsControllerCompat(window, mainContainer).let { controller ->
+            controller.hide(WindowInsetsCompat.Type.systemBars())
+            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+    }
+
+    private fun showSystemUI(window: Window,mainContainer: ConstraintLayout) {
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        WindowInsetsControllerCompat(window, mainContainer).show(WindowInsetsCompat.Type.systemBars())
     }
 
 }

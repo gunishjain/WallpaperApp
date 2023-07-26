@@ -2,6 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.WallpaperApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+
         <item name="colorPrimary">#f1dab1</item>
         <item name="colorPrimaryVariant">#eeb77f</item>
         <item name="colorOnPrimary">#d99477</item>

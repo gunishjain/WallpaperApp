@@ -23,6 +23,17 @@
 
     </androidx.viewpager2.widget.ViewPager2>
 
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:src="@drawable/ic_back"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+    />
+
     <FrameLayout
         android:id="@+id/fullscreen_container"
         android:layout_width="match_parent"
