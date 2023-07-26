@@ -1,8 +1,10 @@
-package com.gunishjain.wallpaperapp.ui.adapters
+package com.gunishjain.wallpaperapp.paging
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
@@ -10,17 +12,17 @@ import com.gunishjain.wallpaperapp.R
 import com.gunishjain.wallpaperapp.data.models.Photo
 import com.gunishjain.wallpaperapp.databinding.SingleWallpaperViewBinding
 
-class SingleWallpaperAdapter() :RecyclerView.Adapter<SingleWallpaperAdapter.SingleImageViewHolder>() {
 
-    private var wallpaperList = ArrayList<Photo>()
+class SingleWallpaperPagingAdapter:
+    PagingDataAdapter<Photo,SingleWallpaperPagingAdapter.SingleWallpaperViewHolder>(COMPARATOR) {
+
     private lateinit var viewPager2: ViewPager2
     private var onFavItemClick: ((Photo) -> Unit)? = null
     private var onSetWPItemClick: ((Photo) -> Unit)? = null
     private var onWallpaperItemClick: ((Photo) -> Unit)? = null
     private var onSetDownloadItemClick: ((Photo) -> Unit)? = null
 
-    fun setWallpaperViewPager(wallpaperList : ArrayList<Photo>, viewPager2: ViewPager2){
-        this.wallpaperList=wallpaperList
+    fun setWallpaperViewPager(viewPager2: ViewPager2){
         this.viewPager2=viewPager2
         notifyDataSetChanged()
 
@@ -42,33 +44,20 @@ class SingleWallpaperAdapter() :RecyclerView.Adapter<SingleWallpaperAdapter.Sing
         onWallpaperItemClick = listener
     }
 
-    class SingleImageViewHolder(val binding:SingleWallpaperViewBinding)
-        : RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SingleImageViewHolder {
-        return SingleImageViewHolder(
-            SingleWallpaperViewBinding.inflate(LayoutInflater.from(parent.context),
-                parent,false))
-    }
 
-    override fun getItemCount(): Int {
-        return wallpaperList.size
-    }
+    override fun onBindViewHolder(holder: SingleWallpaperViewHolder, position: Int) {
+        val wallpaper = getItem(position)
 
-    override fun onBindViewHolder(holder: SingleImageViewHolder, position: Int) {
-
-        val wallpaper = wallpaperList[position]
+//        val wallpaper = wallpaperList[position]
 
         Glide.with(holder.itemView)
-            .load(wallpaper.src.portrait)
+            .load(wallpaper!!.src.portrait)
             .into(holder.binding.imgSingleWallpaper)
 
         val colorResId = if (wallpaper.liked) R.color.red else R.color.white
         holder.binding.imgFavourite.setColorFilter(ContextCompat.getColor(holder.itemView.context, colorResId))
 
-        if(position==wallpaperList.size-1){
-            viewPager2.post(runnable)
-        }
 
         holder.binding.imgSingleWallpaper.setOnClickListener {
             onWallpaperItemClick?.invoke(wallpaper)
@@ -85,12 +74,29 @@ class SingleWallpaperAdapter() :RecyclerView.Adapter<SingleWallpaperAdapter.Sing
         holder.binding.imgDownload.setOnClickListener {
             onSetDownloadItemClick?.invoke(wallpaper)
         }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SingleWallpaperViewHolder {
+        return SingleWallpaperViewHolder(
+            SingleWallpaperViewBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent, false
+            ))
 
     }
 
-    private val runnable = Runnable {
-        wallpaperList.addAll(wallpaperList)
-        notifyDataSetChanged()
-    }
+    class SingleWallpaperViewHolder(var binding: SingleWallpaperViewBinding): RecyclerView.ViewHolder(binding.root)
 
+
+    companion object {
+        private val COMPARATOR = object : DiffUtil.ItemCallback<Photo>() {
+            override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean {
+                return  oldItem.id==newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Photo, newItem: Photo): Boolean {
+                return oldItem==newItem
+            }
+        }
+    }
 }

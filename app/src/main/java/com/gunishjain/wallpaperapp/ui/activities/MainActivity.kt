@@ -1,17 +1,26 @@
 package com.gunishjain.wallpaperapp.ui.activities
 
+import android.app.SearchManager
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.SearchView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.fragment.app.viewModels
 import com.gunishjain.wallpaperapp.R
 import com.gunishjain.wallpaperapp.databinding.ActivityMainBinding
 import com.gunishjain.wallpaperapp.ui.fragments.CategoryListFragment
 import com.gunishjain.wallpaperapp.ui.fragments.FavouriteWallpaperFragment
+import com.gunishjain.wallpaperapp.ui.fragments.SearchWallpaperFragment
 import com.gunishjain.wallpaperapp.ui.fragments.WallpapersListFragment
+import com.gunishjain.wallpaperapp.ui.viewmodels.WallPaperListViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import retrofit2.http.Query
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -53,7 +62,41 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
         menuInflater.inflate(R.menu.toolbar_menu,menu)
-        return super.onCreateOptionsMenu(menu)
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        if (menu != null) {
+            (menu.findItem(R.id.search).actionView as SearchView).apply {
+                setSearchableInfo(searchManager.getSearchableInfo(componentName))
+
+
+                setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+                    override fun onQueryTextSubmit(p0: String?): Boolean {
+                        return false
+                    }
+
+                    override fun onQueryTextChange(p0: String?): Boolean {
+                        val searchFragment = if (p0.isNullOrEmpty()) {
+                            WallpapersListFragment()
+                        } else {
+                            SearchWallpaperFragment().apply {
+                                arguments = Bundle().apply {
+                                    putString("query", p0)
+                                }
+                            }
+                        }
+
+                        val fragmentManager = supportFragmentManager
+                        val fragmentTransaction = fragmentManager.beginTransaction()
+                        fragmentTransaction.replace(binding.fragmentContainer.id, searchFragment)
+                        fragmentTransaction.commit()
+                        return true
+                    }
+
+                })
+
+            }
+        }
+
+        return true
     }
 
 
@@ -84,7 +127,6 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
 
     fun updateCategory(category: String) {
 

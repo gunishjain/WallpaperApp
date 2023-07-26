@@ -25,7 +25,11 @@ class WallPaperListViewModel @Inject constructor(
     private var favWallpaperLiveData = MutableLiveData<List<Photo>>()
     private val _paginatedWallpapers = MutableStateFlow<PagingData<Photo>>(PagingData.empty())
     val paginatedWallpapers= _paginatedWallpapers
+    private var searchQuery: String = ""
 
+    fun updateSearchQuery(newText: String?) {
+        searchQuery = newText ?: ""
+    }
 
     fun getWallPaperList(category: String){
 
@@ -54,7 +58,7 @@ class WallPaperListViewModel @Inject constructor(
     fun getWallpapersPaginated(category: String){
         viewModelScope.launch {
             repository.searchPagination(category).cachedIn(viewModelScope).collect{
-                paginatedWallpapers.value=it
+                _paginatedWallpapers.value=it
             }
         }
     }
