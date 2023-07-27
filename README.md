@@ -25,9 +25,8 @@ object.
 
 ## Screenshots
 
-![App Screenshot](https://github.com/gunishjain/WallpaperApp/blob/main/screenshots/1.png)
-
-![App Screenshot](https://github.com/gunishjain/WallpaperApp/blob/main/screenshots/2.png)
+<img src="https://github.com/gunishjain/WallpaperApp/blob/main/screenshots/1.png" width="200" height="400">
+<img src="https://github.com/gunishjain/WallpaperApp/blob/main/screenshots/2.png" width="200" height="400">
 
 
 ## Tech Stack
