@@ -51,12 +51,16 @@
             android:scaleType="fitXY"
             android:src="@drawable/ic_fav" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/cv_setWallpaper"
             android:layout_width="@dimen/_150sdp"
             android:layout_height="@dimen/_25sdp"
+            app:cardCornerRadius="@dimen/_8sdp"
+            app:strokeColor="@color/font"
+            app:strokeWidth="@dimen/_1sdp"
             android:layout_margin="20dp"
-            android:background="@color/purple_200">
+            app:cardElevation="@dimen/_2sdp"
+            app:background="@color/secondary_var">
 
             <TextView
                 android:id="@+id/tv_setWallpaper"
@@ -65,10 +69,10 @@
                 android:layout_gravity="center"
                 android:text="Set Wallpaper"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/font"
                 android:textSize="18sp" />
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <ImageView
             android:id="@+id/img_download"
