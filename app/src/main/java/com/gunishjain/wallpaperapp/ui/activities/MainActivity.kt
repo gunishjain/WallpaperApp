@@ -11,6 +11,7 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.viewModels
 import com.gunishjain.wallpaperapp.R
 import com.gunishjain.wallpaperapp.databinding.ActivityMainBinding
@@ -47,16 +48,35 @@ class MainActivity : AppCompatActivity() {
 
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.favourite -> gotoFavouriteFragment()
-                R.id.share ->Toast.makeText(applicationContext,
-                    "Clicked on Shared",Toast.LENGTH_SHORT).show()
-
-                R.id.rating ->Toast.makeText(applicationContext,
-                    "Clicked on Ratings!",Toast.LENGTH_SHORT).show()
+                R.id.favourite -> {
+                    gotoFavouriteFragment()
+                    binding.mainDrawer.closeDrawer(GravityCompat.START)
+                }
+                R.id.share ->{
+                    Toast.makeText(applicationContext,
+                        "Clicked on Shared",Toast.LENGTH_SHORT).show()
+                    binding.mainDrawer.closeDrawer(GravityCompat.START)
+                }
+                R.id.rating ->{
+                    Toast.makeText(applicationContext,
+                        "Clicked on Ratings!",Toast.LENGTH_SHORT).show()
+                    binding.mainDrawer.closeDrawer(GravityCompat.START)
+                }
             }
             true
         }
 
+    }
+
+    override fun onBackPressed() {
+
+        if (binding.mainDrawer.isDrawerOpen(GravityCompat.START)) {
+            // Close the navigation drawer
+            binding.mainDrawer.closeDrawer(GravityCompat.START);
+        } else {
+            // Perform the default back button behavior
+            super.onBackPressed();
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

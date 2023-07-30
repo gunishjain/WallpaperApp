@@ -17,23 +17,23 @@
 
     <ImageView
         android:id="@+id/img_favourite"
-        android:layout_width="@dimen/_33sdp"
-        android:layout_height="@dimen/_33sdp"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
         android:layout_gravity="bottom|end"
         android:scaleType="centerCrop"
         android:layout_marginEnd="@dimen/_25sdp"
-        android:layout_marginBottom="@dimen/_25sdp"
-        android:src="@drawable/ic_fav"
+        android:layout_marginBottom="@dimen/_35sdp"
+        android:src="@drawable/favorite_24"
         />
 
     <ImageView
         android:id="@+id/img_download"
-        android:layout_width="@dimen/_35sdp"
-        android:layout_height="@dimen/_35sdp"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
         android:layout_gravity="bottom|left"
         android:scaleType="centerCrop"
-        android:layout_marginLeft="@dimen/_25sdp"
-        android:layout_marginBottom="@dimen/_25sdp"
+        android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginBottom="@dimen/_35sdp"
         android:src="@drawable/ic_download"
          />
 
@@ -43,8 +43,8 @@
         android:layout_height="@dimen/_50sdp"
         android:layout_gravity="bottom|center"
         android:scaleType="centerCrop"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:src="@drawable/ic_check"
+        android:layout_marginBottom="@dimen/_35sdp"
+        android:src="@drawable/ic_set_new"
          />
 
 </androidx.cardview.widget.CardView>

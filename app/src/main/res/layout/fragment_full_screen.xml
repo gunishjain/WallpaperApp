@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraint_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,10 +15,8 @@
 
     <ImageView
         android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleX="2"
-        android:scaleY="2"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
         android:src="@drawable/ic_back"
         app:layout_constraintBottom_toTopOf="@+id/linear_layout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,22 +42,22 @@
 
         <ImageView
             android:id="@+id/img_fav"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="20dp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_fav" />
+            android:src="@drawable/favorite_24" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cv_setWallpaper"
-            android:layout_width="@dimen/_150sdp"
-            android:layout_height="@dimen/_25sdp"
+            android:layout_width="@dimen/_160sdp"
+            android:layout_height="@dimen/_30sdp"
             app:cardCornerRadius="@dimen/_8sdp"
             app:strokeColor="@color/font"
             app:strokeWidth="@dimen/_1sdp"
             android:layout_margin="20dp"
             app:cardElevation="@dimen/_2sdp"
-            app:background="@color/secondary_var">
+            app:cardBackgroundColor="@color/secondary">
 
             <TextView
                 android:id="@+id/tv_setWallpaper"
@@ -68,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Set Wallpaper"
+                android:textStyle="bold"
                 android:textAlignment="center"
                 android:textColor="@color/font"
                 android:textSize="18sp" />
@@ -76,10 +74,10 @@
 
         <ImageView
             android:id="@+id/img_download"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            android:src="@drawable/ic_check" />
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:src="@drawable/ic_download" />
 
 
     </LinearLayout>

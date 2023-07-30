@@ -23,11 +23,13 @@
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/appBar"
-                style="@style/Widget.MaterialComponents.Toolbar.Primary"
+                android:background="@color/primary"
+                style="@style/Theme.WallpaperApp"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:navigationIcon="@drawable/ic_hamburger"
                 app:menu="@menu/toolbar_menu"
+                app:titleTextColor="@color/font"
                 app:title="@string/app_name" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -35,8 +37,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:orientation="vertical"
             android:background="@color/secondary"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,8 +55,7 @@
                 android:id="@+id/fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="15">
-            </FrameLayout>
+                android:layout_weight="15"></FrameLayout>
 
         </LinearLayout>
 
@@ -68,6 +69,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:itemTextColor="@color/font"
+        app:itemIconTint="@color/secondary_var"
         android:fitsSystemWindows="true">
 
     </com.google.android.material.navigation.NavigationView>

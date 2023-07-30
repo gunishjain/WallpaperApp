@@ -121,6 +121,7 @@ class FullScreenFragment : Fragment() {
         }
 
         fragmentTransaction.commit()
+        showSystemUI(requireActivity().window,binding.root)
     }
 
     private fun hideSystemUI(window: Window,mainContainer: ConstraintLayout) {

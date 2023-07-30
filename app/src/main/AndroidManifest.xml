@@ -17,8 +17,10 @@
         android:theme="@style/Theme.WallpaperApp"
         tools:targetApi="31">
         <activity
-            android:name=".WallpaperViewPagerActivity"
-            android:exported="false" />
+            android:name=".ui.activities.WallpaperViewPagerActivity"
+            android:exported="false">
+
+        </activity>
         <activity
             android:name=".ui.activities.MainActivity"
             android:exported="true">
@@ -32,9 +34,6 @@
                 android:resource="@xml/searchablewall" />
         </activity>
 
-        <activity android:name=".ui.activities.WallpaperViewPagerActivity">
-
-        </activity>
     </application>
 
 </manifest>

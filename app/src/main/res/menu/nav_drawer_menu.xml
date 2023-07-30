@@ -3,15 +3,18 @@
 
     <item
         android:id="@+id/favourite"
+        android:icon="@drawable/fav_fill"
         android:title="Favourites">
     </item>
 
     <item
         android:id="@+id/rating"
+        android:icon="@drawable/ic_star"
         android:title="Rate Us!">
     </item>
 
     <item
+        android:icon="@drawable/ic_share"
         android:id="@+id/share"
         android:title="Share App">
     </item>

@@ -1,18 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.WallpaperApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.WallpaperApp" parent="Theme.Material3.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
-
         <item name="colorPrimary">#f1dab1</item>
         <item name="colorPrimaryVariant">#eeb77f</item>
         <item name="colorOnPrimary">#d99477</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#fbeed7</item>
         <item name="colorSecondaryVariant">#d99477</item>
-        <item name="colorOnSecondary">#eeb77f</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <item name="colorOnSecondary">@android:color/transparent</item>
+
     </style>
+
 </resources>

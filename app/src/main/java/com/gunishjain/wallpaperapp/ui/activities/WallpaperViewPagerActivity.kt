@@ -160,7 +160,7 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
         wallpaperVPVM.observeSavedWallpapers().observe(this) {savedList->
 
             if(savedList.isNullOrEmpty()){
-                Toast.makeText(this,"Empty List",Toast.LENGTH_SHORT).show()
+                Log.d("WPVPActivity","Empty Saved List")
             } else {
                 savedWallpapers = savedList
             }
@@ -232,9 +232,13 @@ class WallpaperViewPagerActivity : AppCompatActivity() {
 
     private fun observeWallPaperListPaginated() {
 
-
         val firstPhotoDataList = mutableListOf<Photo>()
-            firstPhotoDataList.add(singlePhoto!!)
+        for(photo in savedWallpapers){
+            if(photo.id == singlePhoto!!.id){
+                singlePhoto!!.liked =photo.liked
+            }
+        }
+        firstPhotoDataList.add(singlePhoto!!)
 
         val singlePagingData = PagingData.from(firstPhotoDataList)
         lifecycleScope.launch {
