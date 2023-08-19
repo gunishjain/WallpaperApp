@@ -1,6 +1,8 @@
 
 # Wallpaper Changing Application 
 
+Play Store Link: https://play.google.com/store/apps/details?id=com.gunishjain.wallpaperapp
+
 Android Application which allows users to set wallpapers for Homescreen and Lockscreen.
 
 It is utilising:
@@ -25,14 +27,16 @@ object.
 
 ## Screenshots
 
-![App Screenshot](https://github.com/gunishjain/WallpaperApp/blob/main/screenshots/1.png)
-
-![App Screenshot](https://github.com/gunishjain/WallpaperApp/blob/main/screenshots/2.png)
-
+<p align="center">
+<img src="https://github.com/gunishjain/WallpaperApp/blob/main/screenshots/1.png" width="200" height="400">
+<img src="https://github.com/gunishjain/WallpaperApp/blob/main/screenshots/3.png" width="200" height="400">
+<img src="https://github.com/gunishjain/WallpaperApp/blob/main/screenshots/4.png" width="200" height="400">
+<img src="https://github.com/gunishjain/WallpaperApp/blob/main/screenshots/5.png" width="200" height="400">
+</p>
 
 ## Tech Stack
 
 **Frontend:** Android-Kotlin
-
+**UI:** XML
 **API:** https://www.pexels.com/api/
 
