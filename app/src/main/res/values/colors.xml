@@ -16,6 +16,8 @@
     <color name="secondary_var">#d99477</color>
     <color name="onSecondary">#eeb77f</color>
     <color name="font">#a15e42</color>
+    <color name="transparent">#00000000</color>
+
 
 
 </resources>

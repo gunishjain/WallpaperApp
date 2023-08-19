@@ -69,7 +69,6 @@ class CategoryListFragment : Fragment() {
 
     private fun onCategoryClick() {
         categoryListAdapter.setOnItemClickListener { category ->
-//            fragment.updateCategory(category)
             if (activity is MainActivity) {
                 val mainActivity = activity as MainActivity
                 mainActivity.updateCategory(category)
