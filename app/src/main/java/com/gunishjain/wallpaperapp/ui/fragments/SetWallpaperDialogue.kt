@@ -1,10 +1,11 @@
 package com.gunishjain.wallpaperapp.ui.fragments
 
+import android.app.AlertDialog
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.gunishjain.wallpaperapp.R
@@ -21,16 +22,13 @@ class SetWallpaperDialogue(wallpaper: Photo) : DialogFragment() {
     private val setWPDialogueVM: SetWallpaperDialogueViewModel by viewModels()
     private val wallpaper : Photo = wallpaper
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentSetWallpaperDialogueBinding.inflate(inflater,container,false)
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        binding= FragmentSetWallpaperDialogueBinding.inflate(layoutInflater)
+        val builder = AlertDialog.Builder(requireActivity())
+        isCancelable = false
+        builder.setView(binding.root)
+        val dialog = builder.create()
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         binding.btnApply.setOnClickListener {
 
@@ -50,7 +48,7 @@ class SetWallpaperDialogue(wallpaper: Photo) : DialogFragment() {
             dismiss()
         }
 
-        return binding.root
+        return dialog
     }
 
 }
