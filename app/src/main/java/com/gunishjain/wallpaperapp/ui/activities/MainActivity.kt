@@ -9,17 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.InstallState
 import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
@@ -32,11 +28,9 @@ import com.gunishjain.wallpaperapp.ui.fragments.CategoryListFragment
 import com.gunishjain.wallpaperapp.ui.fragments.FavouriteWallpaperFragment
 import com.gunishjain.wallpaperapp.ui.fragments.SearchWallpaperFragment
 import com.gunishjain.wallpaperapp.ui.fragments.WallpapersListFragment
-import com.gunishjain.wallpaperapp.ui.viewmodels.WallPaperListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import retrofit2.http.Query
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -52,8 +46,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        appUpdateManager= AppUpdateManagerFactory.create(applicationContext)
-        if(updateType==AppUpdateType.FLEXIBLE){
+        appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
+        if (updateType == AppUpdateType.FLEXIBLE) {
             appUpdateManager.registerListener(installStateUpdatedListener)
         }
         checkForAppUpdates()
@@ -96,7 +90,7 @@ class MainActivity : AppCompatActivity() {
             binding.mainDrawer.closeDrawer(GravityCompat.START);
         } else {
             // Perform the default back button behavior
-            super.onBackPressed();
+            super.onBackPressed()
         }
     }
 
@@ -184,35 +178,40 @@ class MainActivity : AppCompatActivity() {
 
     private fun rateApp() {
         val appPackageName = packageName
+
+        val uri = Uri.parse("market://details?id=$appPackageName")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        intent.addFlags(
+            Intent.FLAG_ACTIVITY_NO_HISTORY or
+                    Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
+                    Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+        )
+
         try {
-            startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("market://details?id=$appPackageName")
-                )
-            )
+            startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            val webIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
-            )
+            // If the Play Store app is not installed, open the Play Store website
+            val webUri = Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+            val webIntent = Intent(Intent.ACTION_VIEW, webUri)
             startActivity(webIntent)
         }
     }
+
 
     // Function to share the app
     private fun shareApp() {
 
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "text/plain"
-        val shareBody = "Check out this amazing app: https://play.google.com/store/apps/details?id=com.gunishjain.wallpaperapp"
+        val shareBody =
+            "Check out this amazing app: https://play.google.com/store/apps/details?id=com.gunishjain.wallpaperapp"
         shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
-
+        startActivity(Intent.createChooser(shareIntent, "Share via"))
     }
 
     override fun onResume() {
         super.onResume()
-        if(updateType==AppUpdateType.IMMEDIATE) {
+        if (updateType == AppUpdateType.IMMEDIATE) {
             appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
                 if (info.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
                     appUpdateManager.startUpdateFlowForResult(
@@ -228,8 +227,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==123){
-            if(resultCode!= RESULT_OK){
+        if (requestCode == 123) {
+            if (resultCode != RESULT_OK) {
                 println("Something went wrong updating!")
             }
         }
@@ -237,13 +236,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if(updateType==AppUpdateType.FLEXIBLE){
+        if (updateType == AppUpdateType.FLEXIBLE) {
             appUpdateManager.unregisterListener(installStateUpdatedListener)
         }
     }
 
-    private val installStateUpdatedListener= InstallStateUpdatedListener {state->
-        if(state.installStatus()==InstallStatus.DOWNLOADED){
+    private val installStateUpdatedListener = InstallStateUpdatedListener { state ->
+        if (state.installStatus() == InstallStatus.DOWNLOADED) {
             Toast.makeText(
                 applicationContext,
                 "Download successful. Restarting app in 5 sec",
@@ -257,16 +256,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun checkForAppUpdates(){
-        appUpdateManager.appUpdateInfo.addOnSuccessListener {info->
-        val isUpdateAvailable= info.updateAvailability()==UpdateAvailability.UPDATE_AVAILABLE
-            val isUpdateAllowed= when(updateType){
-                AppUpdateType.FLEXIBLE->info.isFlexibleUpdateAllowed
-                AppUpdateType.IMMEDIATE->info.isImmediateUpdateAllowed
+    private fun checkForAppUpdates() {
+        appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
+            val isUpdateAvailable = info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+            val isUpdateAllowed = when (updateType) {
+                AppUpdateType.FLEXIBLE -> info.isFlexibleUpdateAllowed
+                AppUpdateType.IMMEDIATE -> info.isImmediateUpdateAllowed
                 else -> false
             }
 
-            if(isUpdateAvailable && isUpdateAllowed){
+            if (isUpdateAvailable && isUpdateAllowed) {
                 appUpdateManager.startUpdateFlowForResult(
                     info,
                     updateType,
